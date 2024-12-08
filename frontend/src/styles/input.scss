@@ -1,0 +1,123 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.inputContainer label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.inputContainer .inputField {
+  display: flex;
+  padding: 1px 0;
+  padding-left: 14px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12);
+  margin: 8px 0;
+  align-items: center;
+  border: 0.75px solid #007b83;
+  border-radius: 5px;
+}
+.inputContainer .inputField.comment-area {
+  width: 90%;
+}
+.inputContainer .inputField.largeInput {
+  width: 420px;
+}
+
+.inputContainer .inputField.mediumInput {
+  width: 250px;
+}
+
+.inputContainer .inputField.smallInput {
+  width: 120px;
+}
+
+/* Shared styles for input and textarea */
+.inputContainer textarea,
+.inputContainer input {
+  border: none;
+  margin-left: 11px;
+  font-weight: bold;
+  border-radius: 0 5px 5px 0px;
+  box-sizing: border-box;
+  background-color: #f3faff;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
+}
+
+/* Input-specific styles */
+.inputContainer input {
+  min-height: 38px;
+  width: 100%; /* Keep input responsive */
+}
+
+/* Textarea-specific styles */
+.inputContainer textarea {
+  min-height: 120px;
+  width: 100%; /* Fixed width for textarea */
+  resize: vertical; /* Allows resizing vertically only */
+}
+
+.inputContainer textarea:focus,
+.inputContainer input:focus {
+  outline: none;
+  border-color: #007b83;
+}
+
+.inputContainer input::placeholder {
+  color: #5e4a6d;
+}
+
+.inputContainer .passwordToggleIcon {
+  cursor: pointer;
+}
+
+.inputContainer .passwordToggleIcon.hidden {
+  display: none;
+}
+
+.inputContainer .passwordToggleIcon.visible {
+  display: inline-block;
+}
+
+@media (max-width: 490px) {
+  .inputContainer {
+    gap: 2px;
+  }
+
+  .inputContainer label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .inputContainer .inputField {
+    height: 40px;
+    padding-left: 10px;
+    margin: 6px 0;
+    width: 100%;
+  }
+
+  .inputContainer .inputField.xlargeInput,
+  .inputContainer .inputField.largeInput,
+  .inputContainer .inputField.mediumInput,
+  .inputContainer .inputField.smallInput {
+    width: 100%;
+  }
+
+  .inputContainer textarea {
+    padding: 10px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    width: 100%; /* Ensure textarea adjusts to screen width on small screens */
+    min-height: 120px;
+  }
+}

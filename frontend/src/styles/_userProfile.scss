@@ -1,0 +1,56 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  
+
+  .profile-card {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    background: #ffffff;
+
+    .profile-header {
+      text-align: center;
+
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 16px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .profile-username {
+        margin-bottom: 8px;
+      }
+
+      .profile-email {
+        margin-bottom: 24px;
+        color: #757575;
+      }
+
+      .profile-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+
+        .profile-stat {
+          text-align: center;
+        }
+      }
+
+      .profile-button {
+        border-radius: 10px;
+      }
+
+      .profile-loading {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}

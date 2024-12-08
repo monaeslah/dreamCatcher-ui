@@ -1,0 +1,209 @@
+.largeButton,
+.mediumButton,
+.smallButton,
+.xlargeButton {
+  max-height: 20px;
+  &.removeButton {
+    width: 25px;
+    height: 35px !important;
+  }
+  &.xlargeButton {
+    width: 120px;
+  }
+  &.largeButton {
+    width: 80px;
+  }
+
+  &.mediumButton {
+    width: 240px;
+  }
+
+  &.smallButton {
+    width: 70px;
+  }
+}
+.innerButton {
+  line-height: 30px;
+}
+.mainBtn {
+  position: relative;
+  display: flex;
+  padding: 4px 12px;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0px 2px 0px 1px rgba(103, 110, 118, 0.16);
+  min-height: 30px;
+  max-height: 32px;
+  display: flex;
+  justify-content: center;
+
+  img {
+    margin-left: auto;
+    width: 18px;
+  }
+
+  &.not_allowed {
+    color: #333333;
+    cursor: not-allowed;
+    background-color: #e9e9e9;
+  }
+  &.remove {
+    background: none;
+    color: #e74c3c;
+    border: none;
+    cursor: pointer;
+  }
+  &.primary-btn {
+    background-color: #7497db;
+    color: #fff;
+
+    font-weight: 600;
+    padding: 4px 12px;
+
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: #87a3dae7;
+    }
+  }
+}
+.comment-position {
+  margin-left: auto;
+  margin-right: 40px;
+}
+//common buttons
+.cancel {
+  margin-right: 12px;
+  margin-left: 12px;
+}
+
+.closeButton {
+  width: 20px;
+}
+
+.reset-btn {
+  margin: 30px auto;
+}
+
+.home-button {
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.icon-position {
+  img {
+    margin-left: 12px;
+    width: 13px;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ok-green-btn {
+  display: flex;
+  color: #fff;
+  align-items: center;
+  border-radius: 5px;
+  background: #093867;
+  font-weight: 600;
+  padding: 4px 12px;
+
+  border: #396c35;
+}
+
+div.options {
+  background-color: #ffffff;
+  position: absolute;
+  max-width: 100px;
+  width: 100%;
+  top: 44px;
+  right: 0;
+  z-index: 2;
+  border: 1px solid #fafaff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.12),
+    0px 15px 35px 0px rgba(103, 110, 118, 0.08);
+}
+.optionitem {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 2px 20px;
+  margin: 10px 0;
+  text-align: center;
+  height: 28px;
+  color: #c90e0e;
+  &:hover {
+    background-color: #e9e9e9;
+  }
+}
+@media (max-width: 490px) {
+  .mainBtn {
+    padding: 4px 12px; /* Reduce padding for mobile */
+    border-radius: 6px;
+    min-height: 28px;
+    max-height: 30px;
+  }
+
+  .largeButton,
+  .mediumButton,
+  .smallButton,
+  .xlargeButton {
+    max-height: 18px; /* Slight reduction for compact fit */
+
+    &.xlargeButton {
+      width: 100px; /* Adjust width for smaller screen */
+    }
+    &.largeButton {
+      width: 70px;
+    }
+    &.mediumButton {
+      width: 45px;
+    }
+    &.smallButton {
+      width: 30px;
+    }
+  }
+
+  .innerButton {
+    line-height: 28px; /* Adjust line-height for compact design */
+    font-size: 0.9rem; /* Reduced font size for better readability */
+  }
+
+  div.options {
+    top: 36px; /* Adjust position for dropdown options */
+    max-width: 90px; /* Slightly reduced width */
+    width: 90%; /* Ensure full-width fit on mobile */
+    right: 5px; /* Adjust alignment */
+    border-radius: 8px; /* Slightly reduced border radius */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1),
+      0px 12px 28px rgba(103, 110, 118, 0.07);
+  }
+
+  .optionitem {
+    padding: 1px 16px; /* Reduced padding */
+    margin: 8px 0;
+    font-size: 0.85rem; /* Reduced font size */
+    height: 24px; /* Adjusted height for compact fit */
+  }
+}
+.removeBtn {
+  height: 25px !important;
+  width: 35px;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 1px 16px;
+  background-color: #9dd9d2 !important;
+  color: #e4f1fe !important;
+}
+.filter {
+  margin-left: auto;
+  align-items: end;
+  display: flex;
+  margin-right: 20px;
+}
+.margin-top {
+  margin-top: 30px;
+}

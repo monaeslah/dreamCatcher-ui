@@ -1,0 +1,29 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0;
+  padding: 0;
+}
+#layout {
+  display: flex;
+  flex-direction: column;
+  .main-area {
+    background-color: rgb(239 246 252);
+
+    display: flex;
+    .main-content {
+      margin-top: 20px;
+      margin-left: 25px;
+      flex: 1;
+      overflow-y: hidden;
+      transition: margin-left 0.3s ease;
+    }
+  }
+
+  .no-sidebar {
+    margin-left: 0;
+  }
+}

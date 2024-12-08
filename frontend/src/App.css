@@ -1,0 +1,248 @@
+
+
+
+/******* signup *******/
+
+.form-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../src/assets/images/tent.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); 
+  z-index: 1;
+}
+
+form {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 50%;
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  font-size: 18px; 
+   
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  font-size: 14px;
+}
+
+p[style='color: red'] {
+  color: red;
+}
+
+p[style='color: green'] {
+  color: green;
+}
+
+
+
+
+
+
+=======
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #bedcfe;
+  position: sticky;
+  top: 0;
+  min-height: 70px;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+nav h1 {
+  color: #32213a;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #32213a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.navbar-link:hover {
+  color: #85bda6;
+}
+
+/* 
+/******* signup *******/
+
+/* .form-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../src/assets/images/tent.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); 
+  z-index: 1;
+}
+
+form {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 50%;
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label-content {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  font-size: 18px; 
+   
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  font-size: 14px;
+}
+
+p[style='color: red'] {
+  color: red;
+}
+
+p[style='color: green'] {
+  color: green;
+} */
+

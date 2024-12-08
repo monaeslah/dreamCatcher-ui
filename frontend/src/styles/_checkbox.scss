@@ -1,0 +1,51 @@
+/* Container for the checkbox */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 35px;
+}
+
+/* Hide the default checkbox */
+.checkbox-container input[type='checkbox'] {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+/* Custom checkbox style */
+.checkbox-container .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #ccc;
+  border-radius: 50%; /* Makes it circular */
+  transition: all 0.3s ease;
+}
+
+/* When the checkbox is checked */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox-container input:checked ~ .checkmark::before {
+  content: '✔';
+  color: white;
+  font-size: 12px;
+}
+
+/* Hover effect */
+.checkbox-container:hover .checkmark {
+  background-color: #bfbfbf;
+}
+.solid {
+  border-top: 3px solid #bbb;
+}

@@ -1,0 +1,23 @@
+$deep-happy: #007b83;
+$happy-green: #4caf50;
+$non-photo-blue: #a6e1fa;
+$caribbean-blue: #0e6ba8;
+$royal-blue: #0a2472;
+$pen-blue: #001c55;
+$oxford-blue: #00072d;
+$lavander: #a480cf;
+$lavander-dark: #986ccfeb;
+$lavander-light: #b49edac0;
+$color-blue-light: #c5d1fead;
+$color-blue-dark: #c6fef2ce;
+$color-blue-comment-light: #d4ddfead;
+$color-blue-comment-dark: #dffef7ce;
+@mixin card-gradient($light, $dark) {
+  background: linear-gradient(to right, $light, $dark);
+}
+@mixin comment-gradient($light, $dark) {
+  background: linear-gradient(to right, $light, $dark);
+}
+@mixin comment-gradient($light, $dark) {
+  background: linear-gradient(to right, $light, $dark);
+}

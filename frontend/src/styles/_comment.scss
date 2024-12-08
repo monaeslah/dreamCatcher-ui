@@ -1,0 +1,23 @@
+#comment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px auto;
+  width: 90%;
+
+  @include comment-gradient(
+    $color-blue-comment-dark,
+    $color-blue-comment-light
+  );
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.comment-button {
+  width: 70px;
+  margin-left: auto;
+}

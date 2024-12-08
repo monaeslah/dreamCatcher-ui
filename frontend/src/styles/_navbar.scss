@@ -1,0 +1,105 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #bedcfe;
+  // background-color: rgb(111 80 148 / 87%);
+  position: sticky;
+  top: 0;
+  min-height: 70px;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+
+  z-index: 100;
+
+  .navbar-logo img {
+    height: 60px;
+    width: auto;
+  }
+
+  .navbar-links {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+  }
+
+  .navbar-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-link {
+    text-decoration: none;
+    color: #32213a;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 16px;
+    font-weight: bold;
+
+    &:hover {
+      color: #85bda6;
+    }
+  }
+
+  .navbar-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+
+    .MuiAvatar-root {
+      margin-left: 1rem; // Adjusted position on the left side
+    }
+
+    .navbar-username {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+  a {
+    color: rgb(111 80 148 / 87%);
+  }
+}
+.signup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #bedcfe;
+  position: sticky;
+  top: 0;
+  max-height: 70px;
+  width: 100%;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+nav h1 {
+  color: #32213a;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+}
+
+.navbar-item {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #32213a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.navbar-link:hover {
+  color: #85bda6;
+}
