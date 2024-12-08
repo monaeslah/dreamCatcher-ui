@@ -31,7 +31,8 @@ app.use('/api', analysisRoutes)
 
 const adminRoutes = require('./routes/admin.routes')
 app.use('/api', adminRoutes)
-
+const moodRoutes = require('./routes/mood.routes')
+app.use('/api', moodRoutes)
 require('./error-handling')(app)
 
 module.exports = app
