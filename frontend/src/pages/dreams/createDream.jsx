@@ -82,6 +82,9 @@ const CreateDream = () => {
         isPublic: false,
         imageUrl: ''
       })
+      setTimeout(() => {
+        navigate('/mine-dreams')
+      }, 3000)
     } catch (error) {
       console.error('Error creating a new dream', error)
     }

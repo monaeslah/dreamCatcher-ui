@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react'
-import { Line, Bar } from 'react-chartjs-2'
-import { fetchMoodData } from '../../services/moods'
+import { fetchMoodData, addMoodData } from '../../services/moods'
 
 const MoodTrackerPage = () => {
-  // States for chart data and filters
-  const [moodTrendsData, setMoodTrendsData] = useState(null)
-  const [emotionFrequencyData, setEmotionFrequencyData] = useState(null)
-  const [loading, setLoading] = useState(null)
-  const [filters, setFilters] = useState({
-    startDate: '',
-    endDate: '',
-    emotion: ''
+  // States for moods and form data
+  const [moods, setMoods] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [formData, setFormData] = useState({
+    mood: '',
+    description: '',
+    date: '',
+
+    intensity: ''
   })
 
+  // Fetch existing moods on component load
   useEffect(() => {
-    const loadComments = async () => {
+    const loadMoods = async () => {
       try {
         const data = await fetchMoodData()
-        setMoodTrendsData(data)
+        setMoods(data)
       } catch (err) {
         console.error('Failed to fetch moods', err)
       } finally {
@@ -25,42 +26,33 @@ const MoodTrackerPage = () => {
       }
     }
 
-    loadComments()
+    loadMoods()
   }, [])
 
-  // Format mood trends data for Line chart
-  const formatMoodTrendsData = data => ({
-    labels: data.map(entry => entry.date),
-    datasets: [
-      {
-        label: 'Mood Trends',
-        data: data.map(entry => entry.moodLevel),
-        fill: false,
-        backgroundColor: '#c5d1fead',
-        borderColor: '#6b73ff'
-      }
-    ]
-  })
-
-  // Format emotion frequency data for Bar chart
-  const formatEmotionFrequencyData = data => ({
-    labels: data.map(entry => entry.emotion),
-    datasets: [
-      {
-        label: 'Emotion Frequency',
-        data: data.map(entry => entry.count),
-        backgroundColor: '#c6fef2ce'
-      }
-    ]
-  })
-
-  // Update filters based on user input
-  const handleFilterChange = e => {
+  // Handle input changes in the form
+  const handleInputChange = e => {
     const { name, value } = e.target
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [name]: value
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: name === 'intensity' ? Number(value) : value
     }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async e => {
+    e.preventDefault()
+    try {
+      const newMood = await addMoodData(formData)
+      setMoods(prevMoods => [...prevMoods, newMood])
+      setFormData({
+        mood: '',
+        description: '',
+        date: '',
+        intensity: ''
+      })
+    } catch (err) {
+      console.error('Error adding mood:', err)
+    }
   }
 
   return (
@@ -68,41 +60,124 @@ const MoodTrackerPage = () => {
       <h1>Mood Tracker</h1>
       <p>Track your emotional journey over time.</p>
 
-      {/* Filters */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <label>
-          Emotion:
-          <select
-            name='emotion'
-            value={filters.emotion}
-            onChange={handleFilterChange}
-            style={{ margin: '0 1rem' }}
+      {/* Form Section */}
+      <div
+        style={{
+          marginBottom: '2rem',
+          padding: '1rem',
+          border: '1px solid #ccc',
+          borderRadius: '8px'
+        }}
+      >
+        <h2>Log a New Mood</h2>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>
+              Mood:
+              <select
+                name='mood'
+                value={formData.mood}
+                onChange={handleInputChange}
+                required
+              >
+                <option value=''>Select Mood</option>
+                <option value='happy'>Happy</option>
+                <option value='sad'>Sad</option>
+                <option value='angry'>Angry</option>
+                <option value='anxious'>Anxious</option>
+                <option value='excited'>Excited</option>
+                <option value='calm'>Calm</option>
+                <option value='neutral'>Neutral</option>
+              </select>
+            </label>
+          </div>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>
+              Description:
+              <textarea
+                name='description'
+                value={formData.description}
+                onChange={handleInputChange}
+                placeholder='Describe your mood'
+                required
+              ></textarea>
+            </label>
+          </div>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>
+              Date:
+              <input
+                type='date'
+                name='date'
+                value={formData.date}
+                onChange={handleInputChange}
+                required
+              />
+            </label>
+          </div>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>
+              Intensity (1-10):
+              <input
+                type='number'
+                name='intensity'
+                value={formData.intensity}
+                onChange={handleInputChange}
+                min='1'
+                max='10'
+                required
+              />
+            </label>
+          </div>
+          <button
+            type='submit'
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#c5d1fead',
+              border: 'none'
+            }}
           >
-            <option value=''>All</option>
-            <option value='Happy'>Happy</option>
-            <option value='Sad'>Sad</option>
-            <option value='Anxious'>Anxious</option>
-            <option value='Joyful'>Joyful</option>
-            {/* Add more options as needed */}
-          </select>
-        </label>
+            Save Mood
+          </button>
+        </form>
       </div>
 
-      {/* Mood Trends Chart */}
-      {moodTrendsData && (
-        <div style={{ marginBottom: '2rem' }}>
-          <h2>Mood Trends Over Time</h2>
-          <Line data={moodTrendsData} />
-        </div>
-      )}
-
-      {/* Emotion Frequency Chart */}
-      {emotionFrequencyData && (
-        <div>
-          <h2>Emotion Frequency</h2>
-          <Bar data={emotionFrequencyData} />
-        </div>
-      )}
+      {/* Display Existing Moods */}
+      <div style={{ marginBottom: '2rem' }}>
+        <h2>Your Mood History</h2>
+        {loading ? (
+          <p>Loading moods...</p>
+        ) : moods.length > 0 ? (
+          <ul style={{ listStyle: 'none', padding: '0' }}>
+            {moods.map((mood, index) => (
+              <li
+                key={index}
+                style={{
+                  marginBottom: '1rem',
+                  padding: '1rem',
+                  border: '1px solid #ccc',
+                  borderRadius: '8px',
+                  backgroundColor: mood.color || '#f9f9f9'
+                }}
+              >
+                <h3>{mood.mood}</h3>
+                <p>
+                  <strong>Description:</strong> {mood.description}
+                </p>
+                <p>
+                  <strong>Date:</strong>{' '}
+                  {new Date(mood.date).toLocaleDateString()}
+                </p>
+                <p>
+                  <strong>Intensity:</strong> {mood.intensity}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No moods logged yet.</p>
+        )}
+      </div>
     </div>
   )
 }

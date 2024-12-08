@@ -63,6 +63,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               {isSidebarOpen && <span>Public Dreams</span>}
             </Link>
           </li>
+          <li className='menu-item'>
+            <Link to='/moods-tracker'>
+              <PublicIcon />
+              {isSidebarOpen && <span>Mood tracker</span>}
+            </Link>
+          </li>
         </ul>
         <div className='sidebar-footer'>
           <ul>

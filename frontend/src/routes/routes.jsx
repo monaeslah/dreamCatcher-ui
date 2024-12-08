@@ -12,6 +12,7 @@ import MyProfile from '../pages/userProfile/userProfile'
 import DreamDetails from '../pages/dreams/dreamDetails'
 import NotFound from '../pages/not-found'
 import Analysis from '../pages/analysis'
+import Moods from '../pages/moods/moods'
 
 const AppRoutes = () => {
   return (
@@ -76,6 +77,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <Analysis />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/moods-tracker'
+          element={
+            <ProtectedRoute>
+              <Moods />
             </ProtectedRoute>
           }
         />
