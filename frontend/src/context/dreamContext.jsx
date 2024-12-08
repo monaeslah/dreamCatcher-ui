@@ -13,7 +13,7 @@ export const DreamProvider = ({ children }) => {
   const [myDreams, setMyDreams] = useState([])
   const [publicDreams, setPublicDreams] = useState([])
   const [specificDream, setSpecificDream] = useState(null)
-  const [error, setError] = useState(null) // Handle errors
+  const [error, setError] = useState(null)
   const navigate = useNavigate()
   const uploadImage = async file => {
     if (!file) {
@@ -109,8 +109,8 @@ export const DreamProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${token}` }
         }
       )
-      console.log('Fetched Public Dreams:', data) // Debugging
-      setPublicDreams(data) // Update state with fetched dreams
+
+      setPublicDreams(data)
     } catch (error) {
       setError('Oh no, failed to fetch public dreams!')
       console.error('Error fetching public dreams:', error)
@@ -118,7 +118,7 @@ export const DreamProvider = ({ children }) => {
   }
   const fetchDreamById = async dreamId => {
     setError(null)
-    setSpecificDream(null) // Reset specific dream state
+    setSpecificDream(null)
     try {
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/dreams/${dreamId}`,

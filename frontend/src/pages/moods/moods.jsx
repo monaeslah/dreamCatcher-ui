@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import { fetchMoodData, addMoodData } from '../../services/moods'
+import { useMoodContext } from '../../context/moodContext'
+import { useAuthContext } from '../../context/authContext'
 
 const MoodTrackerPage = () => {
-  // States for moods and form data
-  const [moods, setMoods] = useState([])
+  const { fetchMoodData, addMoodData, moods } = useMoodContext()
+  const { user } = useAuthContext()
+  const [moodsArray, setMoodsArray] = useState([])
   const [loading, setLoading] = useState(true)
   const [formData, setFormData] = useState({
     mood: '',
@@ -13,23 +15,17 @@ const MoodTrackerPage = () => {
     intensity: ''
   })
 
-  // Fetch existing moods on component load
   useEffect(() => {
     const loadMoods = async () => {
-      try {
-        const data = await fetchMoodData()
-        setMoods(data)
-      } catch (err) {
-        console.error('Failed to fetch moods', err)
-      } finally {
-        setLoading(false)
-      }
+      await fetchMoodData()
+      setLoading(false)
     }
 
     loadMoods()
   }, [])
-
-  // Handle input changes in the form
+  useEffect(() => {
+    setMoodsArray(moods)
+  }, [moods])
   const handleInputChange = e => {
     const { name, value } = e.target
     setFormData(prevData => ({
@@ -38,12 +34,12 @@ const MoodTrackerPage = () => {
     }))
   }
 
-  // Handle form submission
   const handleSubmit = async e => {
     e.preventDefault()
+
+    const newMood = { ...formData, userId: user._id }
     try {
-      const newMood = await addMoodData(formData)
-      setMoods(prevMoods => [...prevMoods, newMood])
+      await addMoodData(newMood)
       setFormData({
         mood: '',
         description: '',
@@ -147,32 +143,34 @@ const MoodTrackerPage = () => {
         <h2>Your Mood History</h2>
         {loading ? (
           <p>Loading moods...</p>
-        ) : moods.length > 0 ? (
+        ) : moodsArray.length > 0 ? (
           <ul style={{ listStyle: 'none', padding: '0' }}>
-            {moods.map((mood, index) => (
-              <li
-                key={index}
-                style={{
-                  marginBottom: '1rem',
-                  padding: '1rem',
-                  border: '1px solid #ccc',
-                  borderRadius: '8px',
-                  backgroundColor: mood.color || '#f9f9f9'
-                }}
-              >
-                <h3>{mood.mood}</h3>
-                <p>
-                  <strong>Description:</strong> {mood.description}
-                </p>
-                <p>
-                  <strong>Date:</strong>{' '}
-                  {new Date(mood.date).toLocaleDateString()}
-                </p>
-                <p>
-                  <strong>Intensity:</strong> {mood.intensity}
-                </p>
-              </li>
-            ))}
+            {moodsArray.map((mood, index) => {
+              return (
+                <li
+                  key={mood._id || index}
+                  style={{
+                    marginBottom: '1rem',
+                    padding: '1rem',
+                    border: '1px solid #ccc',
+                    borderRadius: '8px',
+                    backgroundColor: mood.color || '#f9f9f9'
+                  }}
+                >
+                  <h3>{mood.mood}</h3>
+                  <p>
+                    <strong>Description:</strong> {mood.description}
+                  </p>
+                  <p>
+                    <strong>Date:</strong>{' '}
+                    {new Date(mood.date).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <strong>Intensity:</strong> {mood.intensity}
+                  </p>
+                </li>
+              )
+            })}
           </ul>
         ) : (
           <p>No moods logged yet.</p>

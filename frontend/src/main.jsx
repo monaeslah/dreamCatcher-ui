@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthProvider } from './context/authContext.jsx'
 import { DreamProvider } from './context/dreamContext.jsx'
 import { UserProvider } from './context/userContext.jsx'
+import { MoodProvider } from './context/moodContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <UserProvider>
           <DreamProvider>
-            <App />
+            <MoodProvider>
+              <App />
+            </MoodProvider>
           </DreamProvider>
         </UserProvider>
       </AuthProvider>
