@@ -28,7 +28,6 @@ export const DreamProvider = ({ children }) => {
     )
 
     try {
-      // Temporarily remove the Authorization header
       const defaultHeaders = axios.defaults.headers.common.Authorization
       delete axios.defaults.headers.common.Authorization
 
@@ -39,7 +38,6 @@ export const DreamProvider = ({ children }) => {
         formData
       )
 
-      // Restore the Authorization header
       axios.defaults.headers.common.Authorization = defaultHeaders
 
       return data.secure_url
@@ -65,7 +63,7 @@ export const DreamProvider = ({ children }) => {
     }
   }
   const fetchEmotions = async () => {
-    setError(null) // Reset error state
+    setError(null)
     try {
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/emotions`,
@@ -73,7 +71,7 @@ export const DreamProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${token}` }
         }
       )
-      setEmotions(data) // Set the emotions
+      setEmotions(data)
     } catch (err) {
       setError('Failed to fetch emotions.')
       console.error('Error fetching emotions:', err)
@@ -81,7 +79,7 @@ export const DreamProvider = ({ children }) => {
   }
 
   const fetchMyDreams = async (filters = {}) => {
-    setError(null) // Reset error state
+    setError(null)
 
     try {
       const query = new URLSearchParams(filters).toString()
