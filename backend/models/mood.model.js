@@ -10,8 +10,7 @@ const moodSchema = new Schema(
     },
     mood: {
       type: String,
-      enum: ['happy', 'sad', 'angry', 'anxious', 'excited', 'neutral'],
-
+      enum: ['happy', 'sad', 'angry', 'anxious', 'excited', 'calm', 'neutral'],
       required: true
     },
     color: {
@@ -20,16 +19,29 @@ const moodSchema = new Schema(
       validate: {
         validator: function (color) {
           const moodColorMap = {
-            happy: 'yellow',
-            sad: 'blue',
-            angry: 'red',
-            anxious: 'purple',
-            excited: 'orange',
-            neutral: 'gray'
+            happy: ['#FFF9C4', '#FFF176', '#FBC02D'],
+            sad: ['#BBDEFB', '#64B5F6', '#1976D2'],
+            angry: ['#FFCDD2', '#E57373', '#D32F2F'],
+            anxious: ['#E1BEE7', '#BA68C8', '#7B1FA2'],
+            excited: ['#FFE0B2', '#FFB74D', '#F57C00'],
+            calm: ['#C8E6C9', '#81C784', '#388E3C'],
+            neutral: ['#E0E0E0', '#BDBDBD', '#616161']
           }
-          return this.mood ? moodColorMap[this.mood] === color : true
+
+          const intensity = this.intensity || 5 // Default to medium intensity
+          let expectedColor
+
+          if (intensity <= 3) {
+            expectedColor = moodColorMap[this.mood.toLowerCase()][0]
+          } else if (intensity <= 7) {
+            expectedColor = moodColorMap[this.mood.toLowerCase()][1]
+          } else {
+            expectedColor = moodColorMap[this.mood.toLowerCase()][2]
+          }
+
+          return color === expectedColor
         },
-        message: 'Color does not match the mood.'
+        message: 'Color does not match the mood and intensity.'
       }
     },
     intensity: {

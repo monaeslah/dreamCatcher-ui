@@ -4,20 +4,37 @@ const { isAuthenticated } = require('../middleware/jwt.middleware.js')
 const Moods = require('../models/mood.model.js')
 router.get('/moods', isAuthenticated, async (req, res, next) => {
   try {
-    const userMood = await Moods.find({ userId: req.user._id })
-
-    res.status(200).json(userMood)
+    const moods = await Moods.find({ userId: req.user._id }).sort({ date: -1 })
+    res.status(200).json(moods)
   } catch (error) {
-    next(error)
+    console.error('Error fetching moods:', error.message)
+    res
+      .status(500)
+      .json({ message: 'Internal Server Error', error: error.message })
   }
 })
 router.post('/moods', isAuthenticated, async (req, res, next) => {
-  const { mood, description, color, intensity, date } = req.body
-  if (!mood || !description || !color) {
+  const { mood, description, intensity, date } = req.body
+  if (!mood || !description || !intensity) {
     return res
       .status(400)
-      .json({ message: 'Mood, description, and color are required.' })
+      .json({ message: 'Mood, description, and intensity are required.' })
   }
+  // Mood color mapping
+  const moodColorMap = {
+    happy: ['#FFF9C4', '#FFF176', '#FBC02D'],
+    sad: ['#BBDEFB', '#64B5F6', '#1976D2'],
+    angry: ['#FFCDD2', '#E57373', '#D32F2F'],
+    anxious: ['#E1BEE7', '#BA68C8', '#7B1FA2'],
+    excited: ['#FFE0B2', '#FFB74D', '#F57C00'],
+    calm: ['#C8E6C9', '#81C784', '#388E3C'],
+    neutral: ['#E0E0E0', '#BDBDBD', '#616161']
+  }
+
+  // Determine color based on intensity
+  const intensityIndex = intensity <= 3 ? 0 : intensity <= 7 ? 1 : 2
+  const color = moodColorMap[mood.toLowerCase()][intensityIndex]
+
   Moods.create({
     userId: req.user._id,
     mood,
