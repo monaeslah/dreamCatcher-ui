@@ -12,6 +12,7 @@ import MyProfile from '../pages/userProfile/userProfile'
 import DreamDetails from '../pages/dreams/dreamDetails'
 import NotFound from '../pages/not-found'
 import Analysis from '../pages/analysis'
+import MoodAnalysis from '../pages/analysismoods'
 import Moods from '../pages/moods/moods'
 
 const AppRoutes = () => {
@@ -85,6 +86,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <Moods />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/moods-analysis'
+          element={
+            <ProtectedRoute>
+              <MoodAnalysis />
             </ProtectedRoute>
           }
         />

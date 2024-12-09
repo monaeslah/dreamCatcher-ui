@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import AddnewComment from '../../components/createComment'
 import CommentList from '../../components/commentList'
 import { useDreamContext } from '../../context/dreamContext'
+import { useUserContext } from '../../context/userContext'
+
 import Card from '../../components/CardComponent'
 import { TextField } from '@mui/material'
 const DreamDetails = ({ editMood }) => {
@@ -16,10 +18,11 @@ const DreamDetails = ({ editMood }) => {
     specificDream,
     error
   } = useDreamContext()
-
+  const { user, fetchUserProfile, userId } = useUserContext()
   const [newComments, setNewComments] = useState({})
   const [editingId, setEditingId] = useState(null)
   const [editedDream, setEditedDream] = useState({})
+  const [canEdit, setCanEdit] = useState(false)
   const handleNewComment = (dreamId, newComment) => {
     setNewComments(prev => ({
       ...prev,
@@ -32,6 +35,15 @@ const DreamDetails = ({ editMood }) => {
       fetchDreamById(dreamId)
     }
   }, [])
+  useEffect(() => {
+    fetchUserProfile()
+  }, [])
+
+  useEffect(() => {
+    if ((specificDream, userId)) {
+      setCanEdit(specificDream.userId === userId)
+    }
+  }, [userId])
   const getEmotionNames = emotionIds => {
     return emotionIds.map(id => {
       const emotion = emotions.find(emotion => emotion._id === id)
@@ -45,7 +57,7 @@ const DreamDetails = ({ editMood }) => {
       return tag ? tag.name : 'Unknown Tag'
     })
   }
-  console.log('????', editMood)
+
   const handleDelete = async dreamId => {
     await deleteDream(dreamId)
   }
@@ -62,6 +74,7 @@ const DreamDetails = ({ editMood }) => {
 
   const emotionNames = getEmotionNames(specificDream.emotions || [])
   const tagNames = getTagNames(specificDream.tags || [])
+
   return (
     <div>
       {specificDream ? (
@@ -95,7 +108,7 @@ const DreamDetails = ({ editMood }) => {
               imageUrl={specificDream.imageUrl}
               onEditItem={(id, updatedData) => updateDream(id, updatedData)}
               onDeleteItem={() => handleDelete(specificDream._id)}
-              editMood={true}
+              editMood={canEdit}
             />
           )}
           <CommentList

@@ -12,6 +12,7 @@ export const UserProvider = ({ children }) => {
   const { token } = useAuthContext()
 
   const [user, setUser] = useState(null)
+  const [userId, setUserId] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -26,6 +27,7 @@ export const UserProvider = ({ children }) => {
         }
       )
       setUser(data)
+      setUserId(data._id)
     } catch (err) {
       setError('Oh no, failed to fetch your data!')
       console.error('Error fetching data:', err)
@@ -94,6 +96,7 @@ export const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        userId,
         loading,
         error,
         fetchUserProfile,

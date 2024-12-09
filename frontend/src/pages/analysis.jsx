@@ -35,7 +35,7 @@ ChartJS.register(
 
 const Analysis = () => {
   const { tags, emotions } = useDreamContext()
-  console.log(tags)
+
   const [emotionData, setEmotionData] = useState([])
   const [tagData, setTagData] = useState([])
   const [trendData, setTrendData] = useState([])

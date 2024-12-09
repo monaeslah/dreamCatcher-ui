@@ -20,7 +20,7 @@ router.post('/moods', isAuthenticated, async (req, res, next) => {
       .status(400)
       .json({ message: 'Mood, description, and intensity are required.' })
   }
-  // Mood color mapping
+
   const moodColorMap = {
     happy: ['#FFF9C4', '#FFF176', '#FBC02D'],
     sad: ['#BBDEFB', '#64B5F6', '#1976D2'],
@@ -54,15 +54,37 @@ router.post('/moods', isAuthenticated, async (req, res, next) => {
     })
 })
 
-router.put('/moods/:id', isAuthenticated, (req, res, next) => {
-  Moods.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then(updatedMood => {
-      res.status(200).json(updatedMood)
-    })
-    .catch(error => {
-      next(error)
-    })
+router.put('/moods/:id', isAuthenticated, async (req, res, next) => {
+  try {
+    const { mood, intensity } = req.body
+
+    const moodColorMap = {
+      happy: ['#FFF9C4', '#FFF176', '#FBC02D'],
+      sad: ['#BBDEFB', '#64B5F6', '#1976D2'],
+      angry: ['#FFCDD2', '#E57373', '#D32F2F'],
+      anxious: ['#E1BEE7', '#BA68C8', '#7B1FA2'],
+      excited: ['#FFE0B2', '#FFB74D', '#F57C00'],
+      calm: ['#C8E6C9', '#81C784', '#388E3C'],
+      neutral: ['#E0E0E0', '#BDBDBD', '#616161']
+    }
+
+    // Determine color based on intensity
+    const intensityIndex = intensity <= 3 ? 0 : intensity <= 7 ? 1 : 2
+    const color = moodColorMap[mood.toLowerCase()][intensityIndex]
+
+    const updatedMood = await Moods.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, color }, // Update the color field
+      { new: true } // Return the updated document
+    )
+
+    res.status(200).json(updatedMood)
+  } catch (error) {
+    console.error('Error updating mood:', error.message)
+    next(error)
+  }
 })
+
 router.delete('/moods/:id', isAuthenticated, (req, res, next) => {
   Moods.findByIdAndDelete(req.params.id)
     .then(() => {

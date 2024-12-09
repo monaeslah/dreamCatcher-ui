@@ -93,14 +93,14 @@ const Card = ({
         ) : (
           <>
             <div className='card-actions'>
-              {editMood && (
-                <EditIcon className='edit-icon' onClick={handleEdit} />
-              )}
-              {editMood && (
-                <DeleteIcon
-                  className='delete-icon'
-                  onClick={() => handleDelete(id)}
-                />
+              {editMood && ( // Only show Edit and Delete buttons if editMood is true
+                <>
+                  <EditIcon className='edit-icon' onClick={handleEdit} />
+                  <DeleteIcon
+                    className='delete-icon'
+                    onClick={() => handleDelete(id)}
+                  />
+                </>
               )}
             </div>
             {title && (

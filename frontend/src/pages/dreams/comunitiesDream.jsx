@@ -9,6 +9,7 @@ const PublicDreams = () => {
   const [selectedTags, setSelectedTags] = useState([])
   const [selectedEmotions, setSelectedEmotions] = useState([])
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const fetchData = async () => {
       await fetchPublicDreams()
@@ -16,6 +17,7 @@ const PublicDreams = () => {
     }
     fetchData()
   }, [])
+
   const getEmotionNames = emotionIds => {
     return emotionIds.map(id => {
       const emotion = emotions.find(emotion => emotion._id === id)
@@ -29,11 +31,13 @@ const PublicDreams = () => {
       return tag ? tag.name : 'Unknown Tag'
     })
   }
+
   const toggleTag = tagId => {
     setSelectedTags(prev =>
       prev.includes(tagId) ? prev.filter(id => id !== tagId) : [...prev, tagId]
     )
   }
+
   const toggleEmotion = emotionId => {
     setSelectedEmotions(prev =>
       prev.includes(emotionId)
@@ -41,6 +45,7 @@ const PublicDreams = () => {
         : [...prev, emotionId]
     )
   }
+
   const applyFilters = () => {
     const filters = {}
     if (selectedTags.length > 0) filters.tags = selectedTags.join(',')
@@ -48,6 +53,7 @@ const PublicDreams = () => {
       filters.emotions = selectedEmotions.join(',')
     fetchPublicDreams(filters)
   }
+
   if (loading) {
     return <p>Loading dreams...</p>
   }
@@ -97,6 +103,7 @@ const PublicDreams = () => {
       <button onClick={applyFilters} className='filter caption'>
         Apply Filters
       </button>
+
       {publicDreams.map(dream => {
         const emotionNames = getEmotionNames(dream.emotions || [])
         const tagNames = getTagNames(dream.tags || [])

@@ -1,31 +1,48 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Calendar from './calendar'
 import { useMoodContext } from '../../context/moodContext'
 import { useAuthContext } from '../../context/authContext'
-
+import MoodLegend from './moodcolors'
+import { TextField } from '@mui/material'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { DatePicker } from '@mui/x-date-pickers'
 const MoodTrackerPage = () => {
   const { fetchMoodData, addMoodData, moods } = useMoodContext()
   const { user } = useAuthContext()
   const [moodsArray, setMoodsArray] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     mood: '',
     description: '',
     date: '',
-
     intensity: ''
   })
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   useEffect(() => {
     const loadMoods = async () => {
       await fetchMoodData()
       setLoading(false)
     }
-
     loadMoods()
   }, [])
+
   useEffect(() => {
     setMoodsArray(moods)
   }, [moods])
+
+  const isDateAlreadyChosen = date => {
+    return moodsArray.some(mood => {
+      return (
+        new Date(mood.date).toDateString() === new Date(date).toDateString()
+      )
+    })
+  }
+
   const handleInputChange = e => {
     const { name, value } = e.target
     setFormData(prevData => ({
@@ -37,14 +54,33 @@ const MoodTrackerPage = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    if (isDateAlreadyChosen(formData.date)) {
+      setError(
+        'A mood is already recorded for this date. You can only update it from the calendar.'
+      )
+      return
+    }
+
     const newMood = { ...formData, userId: user._id }
     try {
-      await addMoodData(newMood)
+      const addedMood = await addMoodData(newMood)
+      setMoodsArray(prevMoods => [...prevMoods, addedMood])
+      await fetchMoodData()
+
+      setError('')
       setFormData({
         mood: '',
         description: '',
         date: '',
         intensity: ''
+      })
+
+      // Show success toast notification below the form
+      toast.success('Mood successfully added to the calendar!', {
+        position: 'bottom-center',
+        autoClose: 3000,
+        closeOnClick: true,
+        pauseOnHover: true
       })
     } catch (err) {
       console.error('Error adding mood:', err)
@@ -69,12 +105,17 @@ const MoodTrackerPage = () => {
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
             <label>
-              Mood:
-              <select
+              <TextField
                 name='mood'
+                select
                 value={formData.mood}
                 onChange={handleInputChange}
+                fullWidth
+                margin='normal'
                 required
+                SelectProps={{
+                  native: true
+                }}
               >
                 <option value=''>Select Mood</option>
                 <option value='happy'>Happy</option>
@@ -84,46 +125,54 @@ const MoodTrackerPage = () => {
                 <option value='excited'>Excited</option>
                 <option value='calm'>Calm</option>
                 <option value='neutral'>Neutral</option>
-              </select>
+              </TextField>
             </label>
           </div>
           <div style={{ marginBottom: '1rem' }}>
             <label>
               Description:
-              <textarea
+              <TextField
+                label='Describe your mood'
                 name='description'
                 value={formData.description}
                 onChange={handleInputChange}
-                placeholder='Describe your mood'
                 required
-              ></textarea>
+                fullWidth
+                multiline
+                rows={4}
+                margin='normal'
+              />
             </label>
           </div>
-          <div style={{ marginBottom: '1rem' }}>
-            <label>
-              Date:
-              <input
-                type='date'
-                name='date'
+          <div style={{ marginBottom: '1rem', display: 'flex', gap: '10px' }}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label='Date'
                 value={formData.date}
-                onChange={handleInputChange}
-                required
+                onChange={newDate =>
+                  setFormData(prevData => ({
+                    ...prevData,
+                    date: newDate
+                  }))
+                }
+                renderInput={params => (
+                  <TextField {...params} fullWidth margin='normal' required />
+                )}
               />
-            </label>
-          </div>
-          <div style={{ marginBottom: '1rem' }}>
-            <label>
-              Intensity (1-10):
-              <input
-                type='number'
-                name='intensity'
-                value={formData.intensity}
-                onChange={handleInputChange}
-                min='1'
-                max='10'
-                required
-              />
-            </label>
+            </LocalizationProvider>
+
+            <TextField
+              label='Intensity(1-10)'
+              name='intensity'
+              type='number'
+              value={formData.intensity}
+              onChange={handleInputChange}
+              required
+              inputProps={{
+                min: 1,
+                max: 10
+              }}
+            />
           </div>
           <button
             type='submit'
@@ -135,46 +184,21 @@ const MoodTrackerPage = () => {
           >
             Save Mood
           </button>
+          <p>{error}</p>
         </form>
+        <ToastContainer />
       </div>
 
-      {/* Display Existing Moods */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h2>Your Mood History</h2>
-        {loading ? (
-          <p>Loading moods...</p>
-        ) : moodsArray.length > 0 ? (
-          <ul style={{ listStyle: 'none', padding: '0' }}>
-            {moodsArray.map((mood, index) => {
-              return (
-                <li
-                  key={mood._id || index}
-                  style={{
-                    marginBottom: '1rem',
-                    padding: '1rem',
-                    border: '1px solid #ccc',
-                    borderRadius: '8px',
-                    backgroundColor: mood.color || '#f9f9f9'
-                  }}
-                >
-                  <h3>{mood.mood}</h3>
-                  <p>
-                    <strong>Description:</strong> {mood.description}
-                  </p>
-                  <p>
-                    <strong>Date:</strong>{' '}
-                    {new Date(mood.date).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <strong>Intensity:</strong> {mood.intensity}
-                  </p>
-                </li>
-              )
-            })}
-          </ul>
-        ) : (
-          <p>No moods logged yet.</p>
-        )}
+      {/* Calendar and Legend Section */}
+      <div style={{ display: 'flex', alignItems: 'start' }}>
+        <div style={{ flex: 1 }}>
+          <Calendar moods={moodsArray} setSelectedDate={setSelectedDate} />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'start' }}>
+          <div style={{ flex: 1 }}></div>
+          <MoodLegend />
+        </div>
       </div>
     </div>
   )
