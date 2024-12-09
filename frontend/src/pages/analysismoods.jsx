@@ -7,13 +7,13 @@ import {
 } from '../services/analysisMoodService'
 
 const moodColorMap = {
-  happy: '#FFF9C4',
-  sad: '#BBDEFB',
-  angry: '#FFCDD2',
-  anxious: '#E1BEE7',
-  excited: '#FFE0B2',
-  calm: '#C8E6C9',
-  neutral: '#E0E0E0'
+  happy: '#B473FF',
+  sad: '#4D8AC5',
+  angry: '#FF6F6F',
+  anxious: '#FFB300',
+  excited: '#FF6F00',
+  calm: '#66BB6A',
+  neutral: '#BDBDBD'
 }
 
 const MoodAnalysis = () => {
@@ -21,9 +21,10 @@ const MoodAnalysis = () => {
   const [monthlyData, setMonthlyData] = useState([])
   const [dailyTrends, setDailyTrends] = useState([])
   const [selectedMonth, setSelectedMonth] = useState(
-    new Date().toISOString().slice(0, 7) // Default to current month
+    new Date().toISOString().slice(0, 7)
   )
   const [error, setError] = useState(null)
+  const [showPieChart, setShowPieChart] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +62,31 @@ const MoodAnalysis = () => {
     return <p>{error}</p>
   }
 
+  // Pie Chart Data
+  const pieChartData = {
+    labels: moodData.map(item => item.mood),
+    datasets: [
+      {
+        data: moodData.map(item => item.count),
+        backgroundColor: moodData.map(item => moodColorMap[item.mood])
+      }
+    ]
+  }
+
+  // Bar Chart Data
+  const barChartData = {
+    labels: moodData.map(item => item.mood),
+    datasets: [
+      {
+        label: 'Mood Count',
+        data: moodData.map(item => item.count),
+        backgroundColor: moodData.map(item => moodColorMap[item.mood]),
+        borderColor: moodData.map(item => moodColorMap[item.mood]),
+        borderWidth: 1
+      }
+    ]
+  }
+
   // Helper: Get all days in the month
   const getDaysInMonth = (year, month) => {
     const date = new Date(year, month, 1)
@@ -78,14 +104,13 @@ const MoodAnalysis = () => {
     .map(Number)
   const allDays = getDaysInMonth(selectedYear, selectedMonthIndex - 1)
 
-  // Daily Trends Bar Chart
   const dailyTrendChartData = {
-    labels: allDays.map(day => `Day ${day}`), // Generate labels for all days
+    labels: allDays.map(day => `D-${day}`),
     datasets: dailyTrends.map(trend => ({
       label: trend.mood,
       data: allDays.map(day => {
         const moodRecord = trend.values.find(v => v.date === day)
-        return moodRecord ? moodRecord.intensity : 0 // Default to 0 if no data
+        return moodRecord ? moodRecord.intensity : 0
       }),
       backgroundColor: moodColorMap[trend.mood] || '#CCCCCC',
       borderColor: moodColorMap[trend.mood] || '#AAAAAA',
@@ -93,61 +118,34 @@ const MoodAnalysis = () => {
     }))
   }
 
-  // Pie Chart
-  const pieChartData = {
-    labels: moodData.map(item => item.mood),
-    datasets: [
-      {
-        data: moodData.map(item => item.count),
-        backgroundColor: moodData.map(item => moodColorMap[item.mood])
-      }
-    ]
-  }
-  const barChartData = {
-    labels: moodData.map(item => item.mood),
-    datasets: [
-      {
-        label: 'Mood Count',
-        data: moodData.map(item => item.count),
-        backgroundColor: moodData.map(item => moodColorMap[item.mood]),
-        borderColor: moodData.map(item => moodColorMap[item.mood]),
-        borderWidth: 1
-      }
-    ]
-  }
   return (
     <div>
       <h3>Mood Analysis</h3>
-      {/* Pie Chart */}
-      <div>
-        <h4>Overall Mood Distribution</h4>
-        <Pie data={pieChartData} />
-      </div>
 
       <div>
-        <h4>Mood Distribution for Selected Month</h4>
-        <label>
-          Select Month:
-          <select
-            onChange={e => setSelectedMonth(e.target.value)}
-            value={selectedMonth}
-          >
-            {monthlyData.map(item => (
-              <option
-                key={`${item._id.year}-${item._id.month}`}
-                value={`${item._id.year}-${item._id.month}`}
-              >
-                {item._id.year}-{item._id.month}
-              </option>
-            ))}
-          </select>
+        <div className='subtitle1'>Overall Mood Distribution</div>
+        <label className='toggle-switch'>
+          <input
+            type='checkbox'
+            checked={showPieChart}
+            onChange={() => setShowPieChart(prev => !prev)}
+          />
+          <span className='slider' />
         </label>
-        {barChartData ? (
-          <Bar data={barChartData} />
-        ) : (
-          <p>Select a month to view mood data.</p>
-        )}
+        <span>{showPieChart ? 'Pie Chart' : 'Bar Chart'}</span>
+        <div className='chart-container'>
+          {showPieChart ? (
+            <div className='pie-chart chart-item'>
+              <Pie data={pieChartData} />
+            </div>
+          ) : (
+            <div className='chart-item bar-chart'>
+              <Bar data={barChartData} />
+            </div>
+          )}
+        </div>
       </div>
+
       <div>
         <h4>Daily Mood Tracker</h4>
         <label>

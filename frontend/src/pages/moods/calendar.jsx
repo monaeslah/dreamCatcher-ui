@@ -145,13 +145,26 @@ const Calendar = ({ moods, setSelectedDate }) => {
               <div className='input-fields'>
                 <TextField
                   name='mood'
-                  type='text'
+                  select
                   value={editedMood.mood}
                   onChange={e =>
                     setEditedMood({ ...editedMood, mood: e.target.value })
                   }
                   margin='normal'
-                />
+                  required
+                  SelectProps={{
+                    native: true
+                  }}
+                >
+                  <option value=''>Select Mood</option>
+                  <option value='happy'>Happy</option>
+                  <option value='sad'>Sad</option>
+                  <option value='angry'>Angry</option>
+                  <option value='anxious'>Anxious</option>
+                  <option value='excited'>Excited</option>
+                  <option value='calm'>Calm</option>
+                  <option value='neutral'>Neutral</option>
+                </TextField>
 
                 <TextField
                   name='Description'
@@ -183,7 +196,6 @@ const Calendar = ({ moods, setSelectedDate }) => {
 
               <br />
               <div className='input-fields'>
-                {' '}
                 <button onClick={handleSave}>Save</button>
                 <button onClick={handleCancel}>Cancel</button>
               </div>
@@ -191,6 +203,7 @@ const Calendar = ({ moods, setSelectedDate }) => {
           ) : (
             <div>
               <h3>Mood Details</h3>
+              <p>{selectedMood.mood}</p>
               <p>
                 <strong>Mood:</strong> {selectedMood.mood}
               </p>
@@ -200,8 +213,10 @@ const Calendar = ({ moods, setSelectedDate }) => {
               <p>
                 <strong>Intensity:</strong> {selectedMood.intensity}
               </p>
-              <button onClick={handleEdit}>Edit</button>
-              <button onClick={handleDelete}>Delete</button>
+              <div className='input-fields'>
+                <button onClick={handleEdit}>Edit</button>
+                <button onClick={handleDelete}>Delete</button>
+              </div>
             </div>
           )}
         </div>

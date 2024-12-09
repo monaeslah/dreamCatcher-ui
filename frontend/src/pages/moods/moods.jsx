@@ -75,7 +75,6 @@ const MoodTrackerPage = () => {
         intensity: ''
       })
 
-      // Show success toast notification below the form
       toast.success('Mood successfully added to the calendar!', {
         position: 'bottom-center',
         autoClose: 3000,
@@ -89,8 +88,8 @@ const MoodTrackerPage = () => {
 
   return (
     <div style={{ padding: '2rem', maxWidth: '1024px', margin: 'auto' }}>
-      <h1>Mood Tracker</h1>
-      <p>Track your emotional journey over time.</p>
+      <h4>Log a New Mood</h4>
+      <h5>Track your emotional journey over time.</h5>
 
       {/* Form Section */}
       <div
@@ -101,7 +100,6 @@ const MoodTrackerPage = () => {
           borderRadius: '8px'
         }}
       >
-        <h2>Log a New Mood</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
             <label>

@@ -13,7 +13,8 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom'
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import LogoutIcon from '@mui/icons-material/Logout'
-
+import MoodIcon from '@mui/icons-material/Mood'
+import InsightsIcon from '@mui/icons-material/Insights'
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   // const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { user, logout } = useAuthContext()
@@ -65,14 +66,14 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
           </li>
           <li className='menu-item'>
             <Link to='/moods-tracker'>
-              <PublicIcon />
+              <MoodIcon />
               {isSidebarOpen && <span>Mood tracker</span>}
             </Link>
           </li>
           <li className='menu-item'>
             <Link to='/moods-analysis'>
-              <PublicIcon />
-              {isSidebarOpen && <span>Mood tracker</span>}
+              <InsightsIcon />
+              {isSidebarOpen && <span>Mood analysis</span>}
             </Link>
           </li>
         </ul>
