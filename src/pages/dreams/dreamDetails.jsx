@@ -39,12 +39,12 @@ const DreamDetails = ({ editMood }) => {
     fetchUserProfile()
   }, [])
 
-  // useEffect(() => {
-  //   console.log(userId, specificDream)
-  //   if ((specificDream, userId)) {
-  //     setCanEdit(specificDream.userId === userId)
-  //   }
-  // }, [userId])
+  useEffect(() => {
+    console.log(userId, user, specificDream)
+    if ((specificDream, userId)) {
+      setCanEdit(specificDream.userId === userId)
+    }
+  }, [userId])
   const getEmotionNames = emotionIds => {
     return emotionIds.map(id => {
       const emotion = emotions.find(emotion => emotion._id === id)
