@@ -22,7 +22,7 @@ const DreamDetails = ({ editMood }) => {
   const [newComments, setNewComments] = useState({})
   const [editingId, setEditingId] = useState(null)
   const [editedDream, setEditedDream] = useState({})
-  const [canEdit, setCanEdit] = useState(false)
+  const [canEdit, setCanEdit] = useState(true)
   const handleNewComment = (dreamId, newComment) => {
     setNewComments(prev => ({
       ...prev,
@@ -39,11 +39,12 @@ const DreamDetails = ({ editMood }) => {
     fetchUserProfile()
   }, [])
 
-  useEffect(() => {
-    if ((specificDream, userId)) {
-      setCanEdit(specificDream.userId === userId)
-    }
-  }, [userId])
+  // useEffect(() => {
+  //   console.log(userId, specificDream)
+  //   if ((specificDream, userId)) {
+  //     setCanEdit(specificDream.userId === userId)
+  //   }
+  // }, [userId])
   const getEmotionNames = emotionIds => {
     return emotionIds.map(id => {
       const emotion = emotions.find(emotion => emotion._id === id)
