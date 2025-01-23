@@ -21,6 +21,10 @@ This is the frontend service for the **DreamCatcher** platform, built with Vite 
   - See the deatil delet or update your dreams
   - Explore public dreams from other users.
   - Add tags, emotions, and upload images to your dreams.
+  - **Mood Recording**:
+  - Record and track your mood for specific dates.
+  - View a timeline of your moods alongside dreams.
+  - Analyze mood patterns over time using visual charts.
 - **Comments**: Comment on your dreams or others' dreams.
 - **Analysis**:
   - Visualize dream trends with pie and bar charts.
@@ -72,7 +76,7 @@ src/
 ├── assets/         # Static assets (images, icons, etc.)
 ├── components/     # Reusable components (Cards, Forms, Charts, etc.)
 ├── context/        # Authentication and state context
-├── pages/          # Page-level components (Home, Profile, DreamManagement, etc.)
+├── pages/          # Page-level components (Home, Profile, DreamManagement,MoodTracking, etc.)
 ├── services/       # API service handlers
 ├── styles/         # SCSS stylesheets
 └── utils/          # Utility functions
