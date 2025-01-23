@@ -1,6 +1,6 @@
 # DreamCatcher Frontend
 
-This is the frontend service for the **DreamCatcher** platform, built with Vite and React. It provides a responsive and interactive user interface for managing dreams, exploring others' dreams, analyzing data, and interacting with the community. The backend repository can be found [here](https://github.com/Fabulous-project/dreamcatcher-backend) .
+This is the frontend service for the **DreamCatcher** platform, built with Vite and React. It provides a responsive and interactive user interface for managing dreams, exploring others' dreams, analyzing data, and interacting with the community. The backend repository can be found [here](https://github.com/monaeslah/dreamcatcher-backend) .
 
 ![DreamCatcher UI](./src/assets/images/Screenshot%202024-11-29%20at%2011.44.47.png 'DreamCatcher UI Screenshot')
 
